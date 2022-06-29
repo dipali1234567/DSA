@@ -1,0 +1,25 @@
+class Solution {
+    
+    static void findSub(int index,int n,int                  arr[],Set<ArrayList<Integer>>set,ArrayList<Integer>list)
+    {
+        if(index==n)
+        {
+            set.add(new ArrayList<>(list));
+            return;
+        }
+        
+        list.add(arr[index]);
+        findSub(index+1,n,arr,set,list);
+        list.remove(list.size()-1);
+        findSub(index+1,n,arr,set,list);
+    }
+    public List<List<Integer>> subsets(int[] nums) {
+        
+       Set<ArrayList<Integer>>set=new HashSet<>();
+        ArrayList<Integer>list=new ArrayList<>();
+        findSub(0,nums.length,nums,set,list);
+        
+        List<List<Integer>>ans=new ArrayList<>(set);
+        return ans;
+    }
+}
