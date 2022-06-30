@@ -1,0 +1,112 @@
+/*
+
+Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.
+
+Each number in candidates may only be used once in the combination.
+
+Note: The solution set must not contain duplicate combinations.
+
+ 
+
+Example 1:
+
+Input: candidates = [10,1,2,7,6,1,5], target = 8
+Output: 
+[
+[1,1,6],
+[1,2,5],
+[1,7],
+[2,6]
+]
+Example 2:
+
+Input: candidates = [2,5,2,1,2], target = 5
+Output: 
+[
+[1,2,2],
+[5]
+]
+ 
+
+Constraints:
+
+1 <= candidates.length <= 100
+1 <= candidates[i] <= 50
+1 <= target <= 30
+
+
+
+*/
+
+
+
+Code
+
+class Solution {
+    
+//     static void cal(int index,int n,int arr[],ArrayList<Integer>list,Set<ArrayList<Integer>>set,int sum,int target)
+        
+//     {
+     
+//         if(index==n)
+//         {
+//             if(sum==target)
+//             {
+//                 set.add(new ArrayList<>(list));
+//                 System.out.println(list);
+//             }
+//             return;
+//         }
+        
+//         if(sum>target){
+//             return;}
+        
+//         list.add(arr[index]);
+//         sum=sum+arr[index];
+//         cal(index+1,n,arr,list,set,sum,target);
+        
+//         list.remove(list.size()-1);
+//         sum=sum-arr[index];
+//         cal(index+1,n,arr,list,set,sum,target);
+        
+//     }
+    
+    
+  static void cal(int index,int n,int arr[],ArrayList<Integer>list, List<List<Integer>>set,int sum,int target)
+  {
+      if(target==0)
+      { set.add(new ArrayList<>(list)); return;}
+      
+      for(int i=index;i<n;i++)
+      {
+          if(i>index&&(arr[i]==arr[i-1]))
+              continue;
+          
+          if(arr[i]>target)
+                  break;
+        
+          list.add(arr[i]);
+          
+          cal(index+1,n,arr,list,set,sum,target-arr[i]);
+       
+          list.remove(list.size()-1);
+         
+      }
+      
+      
+  }
+    
+     public List<List<Integer>> combinationSum2(int[] can, int target) {
+        
+        Arrays.sort(can);
+      //   System.out.println(Arrays.toString(can));
+       // Set<ArrayList<Integer>>set=new HashSet<>();
+       
+        List<List<Integer>>lists=new ArrayList<>();
+         
+          cal(0,can.length,can,new ArrayList<>(),lists,0,target);
+         
+        return lists;
+        
+    }
+}
