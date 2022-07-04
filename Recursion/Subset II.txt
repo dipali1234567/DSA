@@ -1,0 +1,82 @@
+Given an integer array nums that may contain duplicates, return all possible subsets (the power set).
+
+The solution set must not contain duplicate subsets. Return the solution in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,2]
+Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+Example 2:
+
+Input: nums = [0]
+Output: [[],[0]]
+ 
+
+Constraints:
+
+1 <= nums.length <= 10
+-10 <= nums[i] <= 10
+
+
+
+//MySolution
+class Solution {
+    
+    
+//     static void cal(int index,int n,int arr[],ArrayList<Integer>list,Set<ArrayList<Integer>>set)
+//     {
+        
+//         if(index==n)
+//         {
+          
+//             set.add(new ArrayList<>(list));
+            
+//             return;
+//         }
+        
+//         list.add(arr[index]);
+//         cal(index+1,n,arr,list,set);
+//         list.remove(list.size()-1);
+//         cal(index+1,n,arr,list,set);
+//     }
+    
+    
+    
+     static void calculate(int index,int n,int arr[],ArrayList<Integer>list,List<List<Integer>>set)
+     {
+         
+         set.add(new ArrayList<>(list));
+         for(int i=index;i<n;i++)
+         {
+             if(i!=index&&(arr[i]==arr[i-1]))
+                 continue;
+             list.add(arr[i]);
+             calculate(i+1,n,arr,list,set);
+             list.remove(list.size()-1);
+         }
+         
+     }
+    
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        
+//        Set<ArrayList<Integer>>set=new HashSet<>();
+    
+//         cal(0,nums.length,nums,new ArrayList<>(),set);
+        
+//         List<List<Integer>>list=new ArrayList<>(set);
+        //In above extra time required to put elements in the set hence below
+        
+        
+        
+        List<List<Integer>>list=new ArrayList<>();
+        calculate(0,nums.length,nums,new ArrayList<>(),list);
+        
+        
+        
+        return list;
+        
+    }
+}
