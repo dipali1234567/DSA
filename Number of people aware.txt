@@ -1,0 +1,108 @@
+2327. Number of People Aware of a Secret
+User Accepted:2378
+User Tried:3881
+Total Accepted:2475
+Total Submissions:7483
+Difficulty:Medium
+On day 1, one person discovers a secret.
+
+You are given an integer delay, which means that each person will share the secret with a new person every day, starting from delay days after discovering the secret. You are also given an integer forget, which means that each person will forget the secret forget days after discovering it. A person cannot share the secret on the same day they forgot it, or on any day afterwards.
+
+Given an integer n, return the number of people who know the secret at the end of day n. Since the answer may be very large, return it modulo 109 + 7.
+
+ 
+
+Example 1:
+
+Input: n = 6, delay = 2, forget = 4
+Output: 5
+Explanation:
+Day 1: Suppose the first person is named A. (1 person)
+Day 2: A is the only person who knows the secret. (1 person)
+Day 3: A shares the secret with a new person, B. (2 people)
+Day 4: A shares the secret with a new person, C. (3 people)
+Day 5: A forgets the secret, and B shares the secret with a new person, D. (3 people)
+Day 6: B shares the secret with E, and C shares the secret with F. (5 people)
+Example 2:
+
+Input: n = 4, delay = 1, forget = 3
+Output: 6
+Explanation:
+Day 1: The first person is named A. (1 person)
+Day 2: A shares the secret with B. (2 people)
+Day 3: A and B share the secret with 2 new people, C and D. (4 people)
+Day 4: A forgets the secret. B, C, and D share the secret with 3 new people. (6 people)
+ 
+
+Constraints:
+
+2 <= n <= 1000
+1 <= delay < forget <= n
+
+Java	
+1
+class Solution {
+2
+    public int peopleAwareOfSecret(int n, int delay, int forget) {
+3
+        long mod = 1000000007L;
+4
+        long[] shares = new long[n + 1];
+5
+        long[] forgets = new long[n + 1];
+6
+        
+7
+        if (delay < n) {
+8
+            shares[delay + 1] = 1;
+9
+        }
+10
+        if (forget < n) {
+11
+            forgets[forget + 1] = 1;
+12
+        }
+13
+        
+14
+        long shareToday = 0;
+15
+        long peopleKnow = 1;
+16
+        for (int i = delay; i <= n; i++) {
+17
+            shareToday += shares[i] % mod;
+18
+            shareToday -= forgets[i] % mod;
+19
+            
+20
+            peopleKnow -= forgets[i] % mod;
+21
+            peopleKnow += shareToday % mod;
+22
+            
+23
+            if (i + delay < n + 1) {
+24
+                shares[i + delay] += shareToday % mod;
+25
+            }
+26
+            if (i + forget < n + 1) {    
+27
+                forgets[i + forget] += shareToday % mod;
+28
+            }
+29
+        }
+30
+        
+31
+        return (int) (peopleKnow % mod);
+32
+    }
+33
+}
