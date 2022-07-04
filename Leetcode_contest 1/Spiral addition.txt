@@ -1,0 +1,256 @@
+2326. Spiral Matrix IV
+User Accepted:8194
+User Tried:8633
+Total Accepted:8334
+Total Submissions:11514
+Difficulty:Medium
+
+
+You are given two integers m and n, which represent the dimensions of a matrix.
+
+You are also given the head of a linked list of integers.
+
+Generate an m x n matrix that contains the integers in the linked list presented in spiral order (clockwise), starting from the top-left of the matrix. If there are remaining empty spaces, fill them with -1.
+
+Return the generated matrix.
+
+ 
+
+Example 1:
+
+
+Input: m = 3, n = 5, head = [3,0,2,6,8,1,7,9,4,2,5,5,0]
+Output: [[3,0,2,6,8],[5,0,-1,-1,1],[5,2,4,9,7]]
+Explanation: The diagram above shows how the values are printed in the matrix.
+Note that the remaining spaces in the matrix are filled with -1.
+Example 2:
+
+
+Input: m = 1, n = 4, head = [0,1,2]
+Output: [[0,1,2,-1]]
+Explanation: The diagram above shows how the values are printed from left to right in the matrix.
+The last space in the matrix is set to -1.
+ 
+
+Constraints:
+
+1 <= m, n <= 105
+1 <= m * n <= 105
+The number of nodes in the list is in the range [1, m * n].
+0 <= Node.val <= 1000
+
+Java	
+1
+/**
+2
+ * Definition for singly-linked list.
+3
+ * public class ListNode {
+4
+ *     int val;
+5
+ *     ListNode next;
+6
+ *     ListNode() {}
+7
+ *     ListNode(int val) { this.val = val; }
+8
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+9
+ * }
+10
+ */
+11
+class Solution {
+12
+    public int[][] spiralMatrix(int m, int n, ListNode he) {
+13
+        int mat[][]=new int[m][n];
+14
+        
+15
+        ListNode head=he;
+16
+        for(int i=0;i<m;i++)
+17
+        {
+18
+            Arrays.fill(mat[i],-1);
+19
+        }
+20
+        
+21
+        int rs=0;
+22
+        int re=m;
+23
+        int cs=0;
+24
+        int ce=n;
+25
+        int i=0;
+26
+        
+27
+        //loop
+28
+while((rs<re)&&(cs<ce))
+29
+      
+30
+{
+31
+      //add first row of remaining rows
+32
+     for(i=cs;i<ce;i++)  
+33
+            {
+34
+                 if(head!=null)
+35
+                 {
+36
+                     mat[rs][i]=head.val;
+37
+                    // System.out.print(mat[rs][i]);
+38
+                   //  System.out.print(head.val+" ");
+39
+                    head= head.next;
+40
+                 }
+41
+                else
+42
+                            mat[rs][i]=-1;
+43
+            }
+44
+            rs++;
+45
+          //  System.out.println();
+46
+            
+47
+            //add last column of remaining columns
+48
+            
+49
+            for(i=rs;i<re;i++)
+50
+            {
+51
+                if(head!=null)
+52
+                {
+53
+                    mat[i][ce-1]=head.val;
+54
+                   // System.out.print(mat[i][ce-1]);
+55
+                    head=head.next;
+56
+                }
+57
+                else
+58
+                            mat[i][ce-1]=-1;
+59
+            }
+60
+            ce--;
+61
+    //System.out.println();
+62
+            //add last row of remaining rows
+63
+            
+64
+            if(rs<re)
+65
+            {
+66
+                for(i=(ce-1);i>=cs;i--)
+67
+                {
+68
+                    if(head!=null)
+69
+                    {
+70
+                        mat[re-1][i]=head.val;
+71
+                       // System.out.print(mat[re-1][i]);
+72
+                        head=head.next;
+73
+                    }
+74
+                    else
+75
+                            mat[re-1][i]=-1;
+76
+                }
+77
+            }
+78
+          //  System.out.println();
+79
+            re--;
+80
+            //add first column of remianing columns
+81
+            
+82
+                
+83
+                if(cs<ce)
+84
+                {
+85
+                    for(i=(re-1);i>=rs;i--)
+86
+                    {
+87
+                        if(head!=null)
+88
+                        {
+89
+                            mat[i][cs]=head.val;
+90
+                         //   System.out.print(mat[i][cs]);
+91
+                            head=head.next;
+92
+                        }
+93
+                        else
+94
+                            mat[i][cs]=-1;
+95
+                    }
+96
+                }
+97
+    
+98
+            cs++;
+99
+   // System.out.println();
+100
+        
+101
+     //System.out.println(Arrays.deepToString(mat));
+102
+    
+103
+        }
+104
+       
+105
+     return mat;   
+106
+    }
+107
+}
